@@ -29,7 +29,7 @@ The environment consists of:
 
 ### Architecture Diagram
 
-![Architecture Diagram](screenshots/architecture.png)
+![Architecture Diagram](architecture.png)
 
 ---
 
@@ -38,9 +38,9 @@ The environment consists of:
 ### Production Environment
 
 ```text
-VPC CIDR:             10.10.0.0/16
-Private Subnet:       10.10.1.0/24
-Bastion Public Subnet: 10.10.2.0/24
+VPC CIDR:               10.10.0.0/16
+Private Subnet:         10.10.1.0/24
+Bastion Public Subnet:  10.10.2.0/24
 ```
 
 The Production environment contains:
@@ -88,7 +88,7 @@ Each VPC is connected to the Transit Gateway through a dedicated **Transit Gatew
 
 ### Transit Gateway Attachments
 
-![Transit Gateway Attachments](screenshots/tgw-attachments.png)
+![Transit Gateway Attachments](tgw-attachments.PNG)
 
 ---
 
@@ -155,15 +155,15 @@ Connectivity between the environments was tested after deployment.
 
 The Bastion Host in Production successfully communicated with the private Staging EC2 instance through the Transit Gateway.
 
-![Staging Connectivity](screenshots/staging-connectivity.png)
+![Staging Connectivity](staging-connectivity.PNG)
 
 ### Production → Test
 
 The Bastion Host in Production successfully communicated with the private Test EC2 instance through the Transit Gateway.
 
-![Test Connectivity](screenshots/test-connectivity.png)
+![Test Connectivity](test-connectivity.PNG)
 
-Both tests completed successfully with:
+The connectivity tests completed successfully with:
 
 ```text
 4 packets transmitted
@@ -177,9 +177,9 @@ This validates private cross-VPC connectivity through AWS Transit Gateway.
 
 ## AWS Reachability Analyzer
 
-AWS **VPC Reachability Analyzer** was also used to analyze network connectivity and troubleshoot the communication path between AWS resources.
+AWS **VPC Reachability Analyzer** was used to analyze network connectivity and troubleshoot communication paths between AWS resources.
 
-The analysis validated the configured AWS network path and provided visibility into components such as:
+The analysis provided visibility into network components such as:
 
 - Network interfaces
 - Subnets
@@ -190,7 +190,7 @@ The analysis validated the configured AWS network path and provided visibility i
 
 ### Reachability Analysis
 
-![Reachability Analyzer](screenshots/reachability-analyzer.png)
+![Reachability Analyzer](reachability-analyzer.PNG)
 
 This demonstrates both infrastructure deployment and practical AWS network troubleshooting.
 
@@ -215,14 +215,14 @@ Terraform manages:
 - Bastion Host
 - Infrastructure outputs
 
-This allows the entire environment to be created and destroyed consistently using Infrastructure as Code.
+This allows the environment to be created, modified, and destroyed consistently using Infrastructure as Code.
 
 ---
 
 ## Project Structure
 
 ```text
-transit-gateway-project/
+AWS-Multi-VPC-Transit-Gateway/
 │
 ├── provider.tf
 ├── network.tf
@@ -230,15 +230,15 @@ transit-gateway-project/
 ├── servers.tf
 ├── variables.tf
 ├── outputs.tf
+├── .terraform.lock.hcl
 ├── .gitignore
 ├── README.md
 │
-└── screenshots/
-    ├── architecture.png
-    ├── tgw-attachments.png
-    ├── staging-connectivity.png
-    ├── test-connectivity.png
-    └── reachability-analyzer.png
+├── architecture.png
+├── tgw-attachments.PNG
+├── staging-connectivity.PNG
+├── test-connectivity.PNG
+└── reachability-analyzer.PNG
 ```
 
 ---
@@ -274,8 +274,8 @@ After deployment:
 1. Connect to the Bastion Host using SSH.
 2. Verify connectivity to the Staging private EC2 instance.
 3. Verify connectivity to the Test private EC2 instance.
-4. Review Transit Gateway attachments.
-5. Use VPC Reachability Analyzer when troubleshooting network paths.
+4. Review the Transit Gateway attachments.
+5. Use VPC Reachability Analyzer to verify or troubleshoot network paths.
 
 Example connectivity test:
 
@@ -302,7 +302,7 @@ This prevents unnecessary AWS resource usage and charges.
 The architecture separates public and private resources:
 
 - Only the Bastion Host requires public access.
-- Application/environment EC2 instances remain in private subnets.
+- Environment EC2 instances remain in private subnets.
 - Inter-VPC traffic uses private AWS networking.
 - Security groups control instance-level access.
 - Network ACLs provide subnet-level controls.
